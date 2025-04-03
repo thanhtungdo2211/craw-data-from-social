@@ -1,0 +1,61 @@
+[2025-03-28T08:50:52.607+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-03-28T08:50:52.625+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_pipeline_dag.check_transcripts_and_split manual__2025-03-28T08:50:37.678257+00:00 [queued]>
+[2025-03-28T08:50:52.633+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_pipeline_dag.check_transcripts_and_split manual__2025-03-28T08:50:37.678257+00:00 [queued]>
+[2025-03-28T08:50:52.634+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 2
+[2025-03-28T08:50:52.644+0000] {taskinstance.py:2879} INFO - Executing <Task(_PythonVirtualenvDecoratedOperator): check_transcripts_and_split> on 2025-03-28 08:50:37.678257+00:00
+[2025-03-28T08:50:52.650+0000] {standard_task_runner.py:72} INFO - Started process 229 to run task
+[2025-03-28T08:50:52.652+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'youtube_pipeline_dag', 'check_transcripts_and_split', 'manual__2025-03-28T08:50:37.678257+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/pipeline.py', '--cfg-path', '/tmp/tmpcmx_baf_']
+[2025-03-28T08:50:52.653+0000] {standard_task_runner.py:105} INFO - Job 4: Subtask check_transcripts_and_split
+[2025-03-28T08:50:52.691+0000] {task_command.py:467} INFO - Running <TaskInstance: youtube_pipeline_dag.check_transcripts_and_split manual__2025-03-28T08:50:37.678257+00:00 [running]> on host b968c2c85c22
+[2025-03-28T08:50:52.765+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='youtube_pipeline_dag' AIRFLOW_CTX_TASK_ID='check_transcripts_and_split' AIRFLOW_CTX_EXECUTION_DATE='2025-03-28T08:50:37.678257+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-28T08:50:37.678257+00:00'
+[2025-03-28T08:50:52.766+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-03-28T08:50:52.769+0000] {process_utils.py:186} INFO - Executing cmd: /home/airflow/.local/bin/python -m virtualenv /tmp/venvg8d8yoh_ --python=python
+[2025-03-28T08:50:52.770+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:50:53.704+0000] {process_utils.py:194} INFO - created virtual environment CPython3.10.14.final.0-64 in 304ms
+[2025-03-28T08:50:53.705+0000] {process_utils.py:194} INFO -   creator CPython3Posix(dest=/tmp/venvg8d8yoh_, clear=False, no_vcs_ignore=False, global=False)
+[2025-03-28T08:50:53.706+0000] {process_utils.py:194} INFO -   seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/airflow/.local/share/virtualenv)
+[2025-03-28T08:50:53.706+0000] {process_utils.py:194} INFO -     added seed packages: pip==24.1, setuptools==70.1.0, wheel==0.43.0
+[2025-03-28T08:50:53.707+0000] {process_utils.py:194} INFO -   activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+[2025-03-28T08:50:53.761+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venvg8d8yoh_/bin/pip install -r /tmp/venvg8d8yoh_/requirements.txt
+[2025-03-28T08:50:53.763+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:50:54.889+0000] {process_utils.py:194} INFO - Collecting youtube_transcript_api==1.0.3 (from -r /tmp/venvg8d8yoh_/requirements.txt (line 1))
+[2025-03-28T08:50:55.118+0000] {process_utils.py:194} INFO -   Downloading youtube_transcript_api-1.0.3-py3-none-any.whl.metadata (23 kB)
+[2025-03-28T08:50:55.240+0000] {process_utils.py:194} INFO - Collecting defusedxml<0.8.0,>=0.7.1 (from youtube_transcript_api==1.0.3->-r /tmp/venvg8d8yoh_/requirements.txt (line 1))
+[2025-03-28T08:50:55.320+0000] {process_utils.py:194} INFO -   Downloading defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+[2025-03-28T08:50:55.459+0000] {process_utils.py:194} INFO - Collecting requests (from youtube_transcript_api==1.0.3->-r /tmp/venvg8d8yoh_/requirements.txt (line 1))
+[2025-03-28T08:50:55.522+0000] {process_utils.py:194} INFO -   Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+[2025-03-28T08:50:55.732+0000] {process_utils.py:194} INFO - Collecting charset-normalizer<4,>=2 (from requests->youtube_transcript_api==1.0.3->-r /tmp/venvg8d8yoh_/requirements.txt (line 1))
+[2025-03-28T08:50:55.800+0000] {process_utils.py:194} INFO -   Downloading charset_normalizer-3.4.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+[2025-03-28T08:50:55.906+0000] {process_utils.py:194} INFO - Collecting idna<4,>=2.5 (from requests->youtube_transcript_api==1.0.3->-r /tmp/venvg8d8yoh_/requirements.txt (line 1))
+[2025-03-28T08:50:55.970+0000] {process_utils.py:194} INFO -   Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+[2025-03-28T08:50:56.084+0000] {process_utils.py:194} INFO - Collecting urllib3<3,>=1.21.1 (from requests->youtube_transcript_api==1.0.3->-r /tmp/venvg8d8yoh_/requirements.txt (line 1))
+[2025-03-28T08:50:56.193+0000] {process_utils.py:194} INFO -   Downloading urllib3-2.3.0-py3-none-any.whl.metadata (6.5 kB)
+[2025-03-28T08:50:56.540+0000] {process_utils.py:194} INFO - Collecting certifi>=2017.4.17 (from requests->youtube_transcript_api==1.0.3->-r /tmp/venvg8d8yoh_/requirements.txt (line 1))
+[2025-03-28T08:50:56.606+0000] {process_utils.py:194} INFO -   Downloading certifi-2025.1.31-py3-none-any.whl.metadata (2.5 kB)
+[2025-03-28T08:50:56.682+0000] {process_utils.py:194} INFO - Downloading youtube_transcript_api-1.0.3-py3-none-any.whl (2.2 MB)
+[2025-03-28T08:51:01.597+0000] {process_utils.py:194} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 440.9 kB/s eta 0:00:00
+[2025-03-28T08:51:01.660+0000] {process_utils.py:194} INFO - Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+[2025-03-28T08:51:01.800+0000] {process_utils.py:194} INFO - Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+[2025-03-28T08:51:01.996+0000] {process_utils.py:194} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 kB 345.1 kB/s eta 0:00:00
+[2025-03-28T08:51:02.058+0000] {process_utils.py:194} INFO - Downloading certifi-2025.1.31-py3-none-any.whl (166 kB)
+[2025-03-28T08:51:02.610+0000] {process_utils.py:194} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 166.4/166.4 kB 301.1 kB/s eta 0:00:00
+[2025-03-28T08:51:02.675+0000] {process_utils.py:194} INFO - Downloading charset_normalizer-3.4.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (146 kB)
+[2025-03-28T08:51:03.467+0000] {process_utils.py:194} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 146.1/146.1 kB 179.6 kB/s eta 0:00:00
+[2025-03-28T08:51:03.529+0000] {process_utils.py:194} INFO - Downloading idna-3.10-py3-none-any.whl (70 kB)
+[2025-03-28T08:51:03.898+0000] {process_utils.py:194} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70.4/70.4 kB 219.7 kB/s eta 0:00:00
+[2025-03-28T08:51:03.963+0000] {process_utils.py:194} INFO - Downloading urllib3-2.3.0-py3-none-any.whl (128 kB)
+[2025-03-28T08:51:04.467+0000] {process_utils.py:194} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 128.4/128.4 kB 267.1 kB/s eta 0:00:00
+[2025-03-28T08:51:04.493+0000] {process_utils.py:194} INFO - Installing collected packages: urllib3, idna, defusedxml, charset-normalizer, certifi, requests, youtube_transcript_api
+[2025-03-28T08:51:04.783+0000] {process_utils.py:194} INFO - Successfully installed certifi-2025.1.31 charset-normalizer-3.4.1 defusedxml-0.7.1 idna-3.10 requests-2.32.3 urllib3-2.3.0 youtube_transcript_api-1.0.3
+[2025-03-28T08:51:05.044+0000] {process_utils.py:194} INFO - 
+[2025-03-28T08:51:05.045+0000] {process_utils.py:194} INFO - [notice] A new release of pip is available: 24.1 -> 25.0.1
+[2025-03-28T08:51:05.045+0000] {process_utils.py:194} INFO - [notice] To update, run: python -m pip install --upgrade pip
+[2025-03-28T08:51:05.157+0000] {python.py:513} INFO - Use 'pickle' as serializer.
+[2025-03-28T08:51:05.168+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venvg8d8yoh_/bin/python /tmp/venv-callrq3kiicv/script.py /tmp/venv-callrq3kiicv/script.in /tmp/venv-callrq3kiicv/script.out /tmp/venv-callrq3kiicv/string_args.txt /tmp/venv-callrq3kiicv/termination.log
+[2025-03-28T08:51:05.170+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:51:48.572+0000] {python.py:240} INFO - Done. Returned value was: ['3MmRBTU1Mc8', 'Zv1aeqWPUv8', 'kNYaN7fVAKo', 'YPbigsSt0Dw', 'Uxqey30vlIM', 'dSUbByiwu3E', 'CTuLCVAeG8g']
+[2025-03-28T08:51:48.592+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-03-28T08:51:48.593+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=youtube_pipeline_dag, task_id=check_transcripts_and_split, run_id=manual__2025-03-28T08:50:37.678257+00:00, execution_date=20250328T085037, start_date=20250328T085052, end_date=20250328T085148
+[2025-03-28T08:51:48.613+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-03-28T08:51:48.641+0000] {taskinstance.py:3891} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-03-28T08:51:48.644+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

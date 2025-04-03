@@ -1,0 +1,117 @@
+[2025-03-28T08:44:34.015+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-03-28T08:44:34.037+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:43:30.385598+00:00 map_index=7 [queued]>
+[2025-03-28T08:44:34.048+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:43:30.385598+00:00 map_index=7 [queued]>
+[2025-03-28T08:44:34.049+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 2
+[2025-03-28T08:44:34.063+0000] {taskinstance.py:2879} INFO - Executing <Mapped(_PythonVirtualenvDecoratedOperator): download_single_audio> on 2025-03-28 08:43:30.385598+00:00
+[2025-03-28T08:44:34.070+0000] {standard_task_runner.py:72} INFO - Started process 352 to run task
+[2025-03-28T08:44:34.074+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'youtube_pipeline_dag', 'download_single_audio', 'manual__2025-03-28T08:43:30.385598+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/pipeline.py', '--cfg-path', '/tmp/tmpqpa0ypvy', '--map-index', '7']
+[2025-03-28T08:44:34.076+0000] {standard_task_runner.py:105} INFO - Job 7: Subtask download_single_audio
+[2025-03-28T08:44:34.151+0000] {task_command.py:467} INFO - Running <TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:43:30.385598+00:00 map_index=7 [running]> on host 40c558f369a4
+[2025-03-28T08:44:34.254+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='youtube_pipeline_dag' AIRFLOW_CTX_TASK_ID='download_single_audio' AIRFLOW_CTX_EXECUTION_DATE='2025-03-28T08:43:30.385598+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-28T08:43:30.385598+00:00'
+[2025-03-28T08:44:34.256+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-03-28T08:44:34.259+0000] {process_utils.py:186} INFO - Executing cmd: /home/airflow/.local/bin/python -m virtualenv /tmp/venvt1_d04bp --python=python
+[2025-03-28T08:44:34.261+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:44:35.717+0000] {process_utils.py:194} INFO - created virtual environment CPython3.10.14.final.0-64 in 579ms
+[2025-03-28T08:44:35.719+0000] {process_utils.py:194} INFO -   creator CPython3Posix(dest=/tmp/venvt1_d04bp, clear=False, no_vcs_ignore=False, global=False)
+[2025-03-28T08:44:35.719+0000] {process_utils.py:194} INFO -   seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/airflow/.local/share/virtualenv)
+[2025-03-28T08:44:35.720+0000] {process_utils.py:194} INFO -     added seed packages: pip==24.1, setuptools==70.1.0, wheel==0.43.0
+[2025-03-28T08:44:35.721+0000] {process_utils.py:194} INFO -   activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+[2025-03-28T08:44:35.823+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venvt1_d04bp/bin/pip install -r /tmp/venvt1_d04bp/requirements.txt
+[2025-03-28T08:44:35.825+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:44:37.325+0000] {process_utils.py:194} INFO - Collecting yt-dlp==2025.3.27 (from -r /tmp/venvt1_d04bp/requirements.txt (line 1))
+[2025-03-28T08:44:37.327+0000] {process_utils.py:194} INFO -   Using cached yt_dlp-2025.3.27-py3-none-any.whl.metadata (172 kB)
+[2025-03-28T08:44:37.345+0000] {process_utils.py:194} INFO - Using cached yt_dlp-2025.3.27-py3-none-any.whl (3.2 MB)
+[2025-03-28T08:44:37.400+0000] {process_utils.py:194} INFO - Installing collected packages: yt-dlp
+[2025-03-28T08:44:39.125+0000] {process_utils.py:194} INFO - Successfully installed yt-dlp-2025.3.27
+[2025-03-28T08:44:39.377+0000] {process_utils.py:194} INFO - 
+[2025-03-28T08:44:39.378+0000] {process_utils.py:194} INFO - [notice] A new release of pip is available: 24.1 -> 25.0.1
+[2025-03-28T08:44:39.379+0000] {process_utils.py:194} INFO - [notice] To update, run: python -m pip install --upgrade pip
+[2025-03-28T08:44:39.520+0000] {python.py:513} INFO - Use 'pickle' as serializer.
+[2025-03-28T08:44:39.532+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venvt1_d04bp/bin/python /tmp/venv-call576osviw/script.py /tmp/venv-call576osviw/script.in /tmp/venv-call576osviw/script.out /tmp/venv-call576osviw/string_args.txt /tmp/venv-call576osviw/termination.log
+[2025-03-28T08:44:39.533+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:44:40.139+0000] {process_utils.py:194} INFO - Traceback (most recent call last):
+[2025-03-28T08:44:40.140+0000] {process_utils.py:194} INFO -   File "/tmp/venv-call576osviw/script.py", line 73, in <module>
+[2025-03-28T08:44:40.141+0000] {process_utils.py:194} INFO -     res = download_single_audio(*arg_dict["args"], **arg_dict["kwargs"])
+[2025-03-28T08:44:40.142+0000] {process_utils.py:194} INFO -   File "/tmp/venv-call576osviw/script.py", line 39, in download_single_audio
+[2025-03-28T08:44:40.143+0000] {process_utils.py:194} INFO -     'format': config.AUDIO_DOWNLOAD_FORMAT,
+[2025-03-28T08:44:40.144+0000] {process_utils.py:194} INFO - NameError: name 'config' is not defined
+[2025-03-28T08:44:40.304+0000] {taskinstance.py:3301} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/decorators/base.py", line 266, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 505, in execute
+    return super().execute(context=serializable_context)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 870, in execute_callable
+    result = self._execute_python_callable_in_subprocess(python_path)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 588, in _execute_python_callable_in_subprocess
+    raise AirflowException(error_msg) from None
+airflow.exceptions.AirflowException: Process returned non-zero exit status 1.
+name 'config' is not defined
+[2025-03-28T08:44:40.312+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=youtube_pipeline_dag, task_id=download_single_audio, run_id=manual__2025-03-28T08:43:30.385598+00:00, map_index=7, execution_date=20250328T084330, start_date=20250328T084434, end_date=20250328T084440
+[2025-03-28T08:44:40.331+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-03-28T08:44:40.332+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 7 for task download_single_audio (Process returned non-zero exit status 1.
+name 'config' is not defined; 352)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/utils/cli.py", line 115, in wrapper
+    return f(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 2995, in _run_raw_task
+    return _run_raw_task(
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 3149, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 3173, in _execute_task
+    return _execute_task(self, context, task_orig)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/decorators/base.py", line 266, in execute
+    return_value = super().execute(context)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 505, in execute
+    return super().execute(context=serializable_context)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 870, in execute_callable
+    result = self._execute_python_callable_in_subprocess(python_path)
+  File "/home/airflow/.local/lib/python3.10/site-packages/airflow/operators/python.py", line 588, in _execute_python_callable_in_subprocess
+    raise AirflowException(error_msg) from None
+airflow.exceptions.AirflowException: Process returned non-zero exit status 1.
+name 'config' is not defined
+[2025-03-28T08:44:40.365+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 1
+[2025-03-28T08:44:40.387+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-03-28T08:44:40.389+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

@@ -1,0 +1,31 @@
+[2025-03-28T08:56:56.992+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-03-28T08:56:57.012+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:50:37.678257+00:00 map_index=4 [queued]>
+[2025-03-28T08:56:57.022+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:50:37.678257+00:00 map_index=4 [queued]>
+[2025-03-28T08:56:57.022+0000] {taskinstance.py:2856} INFO - Starting attempt 2 of 2
+[2025-03-28T08:56:57.035+0000] {taskinstance.py:2879} INFO - Executing <Mapped(_PythonVirtualenvDecoratedOperator): download_single_audio> on 2025-03-28 08:50:37.678257+00:00
+[2025-03-28T08:56:57.042+0000] {standard_task_runner.py:72} INFO - Started process 645 to run task
+[2025-03-28T08:56:57.047+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'youtube_pipeline_dag', 'download_single_audio', 'manual__2025-03-28T08:50:37.678257+00:00', '--job-id', '17', '--raw', '--subdir', 'DAGS_FOLDER/pipeline.py', '--cfg-path', '/tmp/tmpo4k6cw_v', '--map-index', '4']
+[2025-03-28T08:56:57.048+0000] {standard_task_runner.py:105} INFO - Job 17: Subtask download_single_audio
+[2025-03-28T08:56:57.096+0000] {task_command.py:467} INFO - Running <TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:50:37.678257+00:00 map_index=4 [running]> on host b968c2c85c22
+[2025-03-28T08:56:57.171+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='youtube_pipeline_dag' AIRFLOW_CTX_TASK_ID='download_single_audio' AIRFLOW_CTX_EXECUTION_DATE='2025-03-28T08:50:37.678257+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-28T08:50:37.678257+00:00'
+[2025-03-28T08:56:57.172+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-03-28T08:56:57.175+0000] {process_utils.py:186} INFO - Executing cmd: /home/airflow/.local/bin/python -m virtualenv /tmp/venv6i_tg64_ --python=python
+[2025-03-28T08:56:57.177+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:56:58.651+0000] {process_utils.py:194} INFO - created virtual environment CPython3.10.14.final.0-64 in 466ms
+[2025-03-28T08:56:58.653+0000] {process_utils.py:194} INFO -   creator CPython3Posix(dest=/tmp/venv6i_tg64_, clear=False, no_vcs_ignore=False, global=False)
+[2025-03-28T08:56:58.654+0000] {process_utils.py:194} INFO -   seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/airflow/.local/share/virtualenv)
+[2025-03-28T08:56:58.654+0000] {process_utils.py:194} INFO -     added seed packages: pip==24.1, setuptools==70.1.0, wheel==0.43.0
+[2025-03-28T08:56:58.655+0000] {process_utils.py:194} INFO -   activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+[2025-03-28T08:56:58.752+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venv6i_tg64_/bin/pip install -r /tmp/venv6i_tg64_/requirements.txt
+[2025-03-28T08:56:58.754+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:57:00.261+0000] {process_utils.py:194} INFO - Collecting yt-dlp==2025.3.27 (from -r /tmp/venv6i_tg64_/requirements.txt (line 1))
+[2025-03-28T08:57:00.264+0000] {process_utils.py:194} INFO -   Using cached yt_dlp-2025.3.27-py3-none-any.whl.metadata (172 kB)
+[2025-03-28T08:57:00.281+0000] {process_utils.py:194} INFO - Using cached yt_dlp-2025.3.27-py3-none-any.whl (3.2 MB)
+[2025-03-28T08:57:00.334+0000] {process_utils.py:194} INFO - Installing collected packages: yt-dlp
+[2025-03-28T08:57:02.018+0000] {process_utils.py:194} INFO - Successfully installed yt-dlp-2025.3.27
+[2025-03-28T08:57:02.243+0000] {process_utils.py:194} INFO - 
+[2025-03-28T08:57:02.244+0000] {process_utils.py:194} INFO - [notice] A new release of pip is available: 24.1 -> 25.0.1
+[2025-03-28T08:57:02.245+0000] {process_utils.py:194} INFO - [notice] To update, run: python -m pip install --upgrade pip
+[2025-03-28T08:57:02.348+0000] {python.py:513} INFO - Use 'pickle' as serializer.
+[2025-03-28T08:57:02.357+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venv6i_tg64_/bin/python /tmp/venv-callmysazc5t/script.py /tmp/venv-callmysazc5t/script.in /tmp/venv-callmysazc5t/script.out /tmp/venv-callmysazc5t/string_args.txt /tmp/venv-callmysazc5t/termination.log
+[2025-03-28T08:57:02.358+0000] {process_utils.py:190} INFO - Output:

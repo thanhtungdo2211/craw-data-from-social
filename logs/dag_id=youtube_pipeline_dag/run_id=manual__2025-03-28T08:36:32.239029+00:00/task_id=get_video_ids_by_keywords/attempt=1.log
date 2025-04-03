@@ -1,0 +1,39 @@
+[2025-03-28T08:36:33.779+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-03-28T08:36:33.798+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_pipeline_dag.get_video_ids_by_keywords manual__2025-03-28T08:36:32.239029+00:00 [queued]>
+[2025-03-28T08:36:33.806+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_pipeline_dag.get_video_ids_by_keywords manual__2025-03-28T08:36:32.239029+00:00 [queued]>
+[2025-03-28T08:36:33.807+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 2
+[2025-03-28T08:36:33.817+0000] {taskinstance.py:2879} INFO - Executing <Task(_PythonVirtualenvDecoratedOperator): get_video_ids_by_keywords> on 2025-03-28 08:36:32.239029+00:00
+[2025-03-28T08:36:33.829+0000] {standard_task_runner.py:72} INFO - Started process 72 to run task
+[2025-03-28T08:36:33.831+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'youtube_pipeline_dag', 'get_video_ids_by_keywords', 'manual__2025-03-28T08:36:32.239029+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/pipeline.py', '--cfg-path', '/tmp/tmp8c80nd9i']
+[2025-03-28T08:36:33.832+0000] {standard_task_runner.py:105} INFO - Job 3: Subtask get_video_ids_by_keywords
+[2025-03-28T08:36:33.882+0000] {task_command.py:467} INFO - Running <TaskInstance: youtube_pipeline_dag.get_video_ids_by_keywords manual__2025-03-28T08:36:32.239029+00:00 [running]> on host 72bb8e500297
+[2025-03-28T08:36:33.966+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='youtube_pipeline_dag' AIRFLOW_CTX_TASK_ID='get_video_ids_by_keywords' AIRFLOW_CTX_EXECUTION_DATE='2025-03-28T08:36:32.239029+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-28T08:36:32.239029+00:00'
+[2025-03-28T08:36:33.968+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-03-28T08:36:33.973+0000] {process_utils.py:186} INFO - Executing cmd: /home/airflow/.local/bin/python -m virtualenv /tmp/venvmwc4ml2b --python=python
+[2025-03-28T08:36:33.975+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:36:35.873+0000] {process_utils.py:194} INFO - created virtual environment CPython3.10.14.final.0-64 in 1041ms
+[2025-03-28T08:36:35.874+0000] {process_utils.py:194} INFO -   creator CPython3Posix(dest=/tmp/venvmwc4ml2b, clear=False, no_vcs_ignore=False, global=False)
+[2025-03-28T08:36:35.874+0000] {process_utils.py:194} INFO -   seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/airflow/.local/share/virtualenv)
+[2025-03-28T08:36:35.875+0000] {process_utils.py:194} INFO -     added seed packages: pip==24.1, setuptools==70.1.0, wheel==0.43.0
+[2025-03-28T08:36:35.875+0000] {process_utils.py:194} INFO -   activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+[2025-03-28T08:36:35.938+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venvmwc4ml2b/bin/pip install -r /tmp/venvmwc4ml2b/requirements.txt
+[2025-03-28T08:36:35.940+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:36:37.391+0000] {process_utils.py:194} INFO - Collecting yt-dlp==2025.3.27 (from -r /tmp/venvmwc4ml2b/requirements.txt (line 1))
+[2025-03-28T08:36:37.633+0000] {process_utils.py:194} INFO -   Downloading yt_dlp-2025.3.27-py3-none-any.whl.metadata (172 kB)
+[2025-03-28T08:36:37.795+0000] {process_utils.py:194} INFO -      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 172.1/172.1 kB 1.0 MB/s eta 0:00:00
+[2025-03-28T08:36:37.889+0000] {process_utils.py:194} INFO - Downloading yt_dlp-2025.3.27-py3-none-any.whl (3.2 MB)
+[2025-03-28T08:36:38.390+0000] {process_utils.py:194} INFO -    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.2/3.2 MB 6.5 MB/s eta 0:00:00
+[2025-03-28T08:36:38.428+0000] {process_utils.py:194} INFO - Installing collected packages: yt-dlp
+[2025-03-28T08:36:39.883+0000] {process_utils.py:194} INFO - Successfully installed yt-dlp-2025.3.27
+[2025-03-28T08:36:40.102+0000] {process_utils.py:194} INFO - 
+[2025-03-28T08:36:40.104+0000] {process_utils.py:194} INFO - [notice] A new release of pip is available: 24.1 -> 25.0.1
+[2025-03-28T08:36:40.104+0000] {process_utils.py:194} INFO - [notice] To update, run: python -m pip install --upgrade pip
+[2025-03-28T08:36:40.186+0000] {python.py:513} INFO - Use 'pickle' as serializer.
+[2025-03-28T08:36:40.196+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venvmwc4ml2b/bin/python /tmp/venv-callcacdrv07/script.py /tmp/venv-callcacdrv07/script.in /tmp/venv-callcacdrv07/script.out /tmp/venv-callcacdrv07/string_args.txt /tmp/venv-callcacdrv07/termination.log
+[2025-03-28T08:36:40.197+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T08:36:44.233+0000] {python.py:240} INFO - Done. Returned value was: ['q_pJxlcZhsM', 'SzRt50Rg6eU', '89MfirvAjs8', 'Zv1aeqWPUv8', 'kNYaN7fVAKo', 'SBjwyHC0X00', 'iABPytW8-9g', 'yhfNiyXj0II', 'YPbigsSt0Dw', '-hJWNccNm78', '3uSiuIVLq-U', 'ooseD8-Z29I', 'OGICvBt8ggo', 'Uxqey30vlIM', '3MmRBTU1Mc8', 'RzMf2iWdy-c', 'z1zQ8GubCss', 'Ax2oLn1BYvA', 'mQESf6YRklQ', 'vxZ_Z6gaFjc', '8xPMNlQiGSI', 'wAN7c-lcw5g', '5-t7xwDcC4E', 'CTuLCVAeG8g', 'dSUbByiwu3E', 'wi7DwbzVEgs', 'h_OCxyM69EU', 'fZaeAFt8Ykc', 'OcLdKZui_Uo', 'jFMkuTkhBpc', 'mnZvn8IiDV8', '4g6mWbAYk6w', '6zls4k1LWRU', 'DZh3we51oyA', '3CW0Vqlowrc', 'BCHaxvtMdpI', 'k8tDIJ76FyY', 'BawxaGyxYS0', 'uqg5EPZBGVg', 'JELbPnbqEFU', 'uwv-ECe-xzc', '_m5CLU_6Yf8', 'suvhbY2FtZw', 'zdaxBx-lwD0', 'CKNKDEDEYLg', 'cPWGn7pcgfQ', 'yhXULOkKgy8', 'GN2RxlhP73g']
+[2025-03-28T08:36:44.258+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-03-28T08:36:44.260+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=youtube_pipeline_dag, task_id=get_video_ids_by_keywords, run_id=manual__2025-03-28T08:36:32.239029+00:00, execution_date=20250328T083632, start_date=20250328T083633, end_date=20250328T083644
+[2025-03-28T08:36:44.296+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-03-28T08:36:44.325+0000] {taskinstance.py:3891} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-03-28T08:36:44.327+0000] {local_task_job_runner.py:240} INFO - ::endgroup::

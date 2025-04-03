@@ -1,0 +1,39 @@
+[2025-03-28T09:00:54.575+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-03-28T09:00:54.593+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:59:52.208154+00:00 map_index=2 [queued]>
+[2025-03-28T09:00:54.602+0000] {taskinstance.py:2603} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:59:52.208154+00:00 map_index=2 [queued]>
+[2025-03-28T09:00:54.602+0000] {taskinstance.py:2856} INFO - Starting attempt 1 of 2
+[2025-03-28T09:00:54.615+0000] {taskinstance.py:2879} INFO - Executing <Mapped(_PythonVirtualenvDecoratedOperator): download_single_audio> on 2025-03-28 08:59:52.208154+00:00
+[2025-03-28T09:00:54.621+0000] {standard_task_runner.py:72} INFO - Started process 363 to run task
+[2025-03-28T09:00:54.624+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'youtube_pipeline_dag', 'download_single_audio', 'manual__2025-03-28T08:59:52.208154+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/pipeline.py', '--cfg-path', '/tmp/tmp2x8g07g5', '--map-index', '2']
+[2025-03-28T09:00:54.626+0000] {standard_task_runner.py:105} INFO - Job 10: Subtask download_single_audio
+[2025-03-28T09:00:54.670+0000] {task_command.py:467} INFO - Running <TaskInstance: youtube_pipeline_dag.download_single_audio manual__2025-03-28T08:59:52.208154+00:00 map_index=2 [running]> on host ad5e46b2d003
+[2025-03-28T09:00:54.736+0000] {taskinstance.py:3122} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='youtube_pipeline_dag' AIRFLOW_CTX_TASK_ID='download_single_audio' AIRFLOW_CTX_EXECUTION_DATE='2025-03-28T08:59:52.208154+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-03-28T08:59:52.208154+00:00'
+[2025-03-28T09:00:54.737+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-03-28T09:00:54.740+0000] {process_utils.py:186} INFO - Executing cmd: /home/airflow/.local/bin/python -m virtualenv /tmp/venveejre52y --python=python
+[2025-03-28T09:00:54.741+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T09:00:55.697+0000] {process_utils.py:194} INFO - created virtual environment CPython3.10.14.final.0-64 in 307ms
+[2025-03-28T09:00:55.697+0000] {process_utils.py:194} INFO -   creator CPython3Posix(dest=/tmp/venveejre52y, clear=False, no_vcs_ignore=False, global=False)
+[2025-03-28T09:00:55.698+0000] {process_utils.py:194} INFO -   seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/airflow/.local/share/virtualenv)
+[2025-03-28T09:00:55.699+0000] {process_utils.py:194} INFO -     added seed packages: pip==24.1, setuptools==70.1.0, wheel==0.43.0
+[2025-03-28T09:00:55.699+0000] {process_utils.py:194} INFO -   activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+[2025-03-28T09:00:55.773+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venveejre52y/bin/pip install -r /tmp/venveejre52y/requirements.txt
+[2025-03-28T09:00:55.775+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T09:00:57.129+0000] {process_utils.py:194} INFO - Collecting yt-dlp==2025.3.27 (from -r /tmp/venveejre52y/requirements.txt (line 1))
+[2025-03-28T09:00:57.131+0000] {process_utils.py:194} INFO -   Using cached yt_dlp-2025.3.27-py3-none-any.whl.metadata (172 kB)
+[2025-03-28T09:00:57.145+0000] {process_utils.py:194} INFO - Using cached yt_dlp-2025.3.27-py3-none-any.whl (3.2 MB)
+[2025-03-28T09:00:57.189+0000] {process_utils.py:194} INFO - Installing collected packages: yt-dlp
+[2025-03-28T09:00:58.842+0000] {process_utils.py:194} INFO - Successfully installed yt-dlp-2025.3.27
+[2025-03-28T09:00:59.077+0000] {process_utils.py:194} INFO - 
+[2025-03-28T09:00:59.078+0000] {process_utils.py:194} INFO - [notice] A new release of pip is available: 24.1 -> 25.0.1
+[2025-03-28T09:00:59.079+0000] {process_utils.py:194} INFO - [notice] To update, run: python -m pip install --upgrade pip
+[2025-03-28T09:00:59.197+0000] {python.py:513} INFO - Use 'pickle' as serializer.
+[2025-03-28T09:00:59.205+0000] {process_utils.py:186} INFO - Executing cmd: /tmp/venveejre52y/bin/python /tmp/venv-calld0eu00n0/script.py /tmp/venv-calld0eu00n0/script.in /tmp/venv-calld0eu00n0/script.out /tmp/venv-calld0eu00n0/string_args.txt /tmp/venv-calld0eu00n0/termination.log
+[2025-03-28T09:00:59.207+0000] {process_utils.py:190} INFO - Output:
+[2025-03-28T09:03:46.982+0000] {process_utils.py:194} INFO - [download] 100% of    3.24MiB in 00:02:44 at 20.16KiB/s                                                       WARNING: Cannot update utime of file
+[2025-03-28T09:03:48.628+0000] {process_utils.py:194} INFO - WARNING: Cannot update utime of file
+[2025-03-28T09:03:48.898+0000] {python.py:240} INFO - Done. Returned value was: Successfully downloaded YPbigsSt0Dw
+[2025-03-28T09:03:48.934+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-03-28T09:03:48.935+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=youtube_pipeline_dag, task_id=download_single_audio, run_id=manual__2025-03-28T08:59:52.208154+00:00, map_index=2, execution_date=20250328T085952, start_date=20250328T090054, end_date=20250328T090348
+[2025-03-28T09:03:48.996+0000] {local_task_job_runner.py:261} INFO - Task exited with return code 0
+[2025-03-28T09:03:49.016+0000] {taskinstance.py:3891} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-03-28T09:03:49.019+0000] {local_task_job_runner.py:240} INFO - ::endgroup::
