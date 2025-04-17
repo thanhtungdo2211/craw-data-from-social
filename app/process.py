@@ -65,7 +65,7 @@ def process_video(video_id: str):
             transcript_text = formatter.format_transcript(transcript_data)
         except Exception as e:
             logger.error(f"Lỗi khi xử lý Vietnamese transcript cho {video_id}: {str(e)}")
-            has_vi = False  # Chuyển sang phương pháp thay thế
+            has_vi = False  
     
     if not has_vi or not transcript_text:
         audio_path = os.path.join(AUDIO_DIR, f"{video_id}.mp3")
@@ -104,10 +104,10 @@ def process_video(video_id: str):
         save_video_to_db(video_id, video_url, error_msg, error_msg)
         return video_id, video_url, error_msg, error_msg
     
-    # Trích xuất content từ transcript
+    # Extract content from transcripts
     content = extract_content_from_transcript(transcript_text)
     
-    # Lưu vào database
+    # Save to database
     save_video_to_db(video_id, video_url, transcript_text, content)
     
     return video_id, video_url, transcript_text, content

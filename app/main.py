@@ -20,7 +20,7 @@ DATA_DIR = BASE_DIR / "data"
 AUDIO_DIR = DATA_DIR / "audio"
 TRANSCRIPT_DIR = DATA_DIR / "transcripts"
 
-YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY", "AIzaSyAksXQ8PeaFsqCsNo7CSuD9kJjT4xSEUQQ")
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 os.makedirs(AUDIO_DIR, exist_ok=True)
 os.makedirs(TRANSCRIPT_DIR, exist_ok=True)
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     with st.form("search_form"):
         query = st.text_input("Nhập từ khóa tìm kiếm hoặc tên kênh YouTube (bắt đầu bằng @):", 
-                            placeholder="Ví dụ: 'việt tân' hoặc '@viettan'")
+                            placeholder="Ví dụ: 'việt tân' hoặc '@VietTan'")
         max_results = st.slider("Số lượng video tối đa:", min_value=1, max_value=50, value=5)
         submitted = st.form_submit_button("Tìm kiếm")
 

@@ -3,3 +3,5 @@ youtube_transcript_api==1.0.3
 yt_dlp==2025.3.27
 streamlit==1.44.1
 google-api-python-client==2.164.0
+SQLAlchemy==1.4.49 
+psycopg2-binary==2.9.6

@@ -7,13 +7,12 @@ def audio_to_transcript(audio_path):
     segments, info = model.transcribe(audio_path, beam_size=5)
 
     print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
-    # print("segments:", segments.text)
 
     transcription = ""
     
     for segment in segments:
-        text = segment.text.strip()
-        print(f"{text}")
+        # text = segment.text.strip()
+        # print(f"{text}")
         transcription += segment.text 
 
     return transcription
