@@ -2,3 +2,4 @@ faster_whisper==1.1.1
 youtube_transcript_api==1.0.3
 yt_dlp==2025.3.27
 streamlit==1.44.1
+google-api-python-client==2.164.0

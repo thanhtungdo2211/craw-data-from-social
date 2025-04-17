@@ -24,5 +24,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN pip install sqlalchemy
+
 USER airflow
 COPY ./dags/ ${AIRFLOW_HOME}/dags/

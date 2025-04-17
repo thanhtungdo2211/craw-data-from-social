@@ -51,20 +51,20 @@ def download_single_audio(video_id: str, output_dir: str, format_audio: str = "b
 @task
 def process_audio_list(audio_list: list = None) -> list:
     """
-    Get list of videos that need audio download.
+    Process list of videos that need audio download.
     
     Args:
-        audio_list (list): List video ID to download audio
+        audio_list (list): List of video IDs to download audio for
         
     Returns:
-        list: List of video IDs to download
+        list: Processed list of video IDs
     """
     import logging
     
     if not audio_list:
-        logging.info("No video IDs found")
+        logging.info("No video IDs found for audio download")
         return []
     
     simple_list = [str(vid) for vid in audio_list if vid]
-    logging.info(f"Produce {len(simple_list)} video to download audio")
+    logging.info(f"Processing {len(simple_list)} videos for audio download")
     return simple_list
