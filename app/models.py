@@ -13,3 +13,6 @@ class YouTubeVideo(Base):
     transcript = Column(Text, nullable=True)
     content = Column(Text)
 
+    create = Column(DateTime, default=func.now())
+    update = Column(DateTime, default=func.now(), onupdate=func.now())
+    

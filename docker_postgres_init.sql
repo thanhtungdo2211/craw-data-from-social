@@ -12,6 +12,7 @@ CREATE TABLE youtube_videos (
     video_id VARCHAR(255) NOT NULL,
     url VARCHAR(500) NOT NULL,
     transcript TEXT,
+    content TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

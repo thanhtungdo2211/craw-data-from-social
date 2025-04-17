@@ -1,7 +1,7 @@
 tests/backup/
 data/*
 # services/ai-service/*
-
+*.log
 .env
 
 # Byte-compiled / optimized files
