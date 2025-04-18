@@ -1,3 +1,5 @@
+*.mp3
+
 # Local development
 __pycache__/
 services/central_storage

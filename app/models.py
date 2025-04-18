@@ -12,7 +12,8 @@ class YouTubeVideo(Base):
     url = Column(String(500), nullable=False)
     transcript = Column(Text, nullable=True)
     content = Column(Text)
-
+    task_id = Column(String)
+    status = Column(String)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     

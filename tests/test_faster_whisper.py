@@ -10,7 +10,7 @@ model_size = "large-v3"
 # or run on CPU with INT8
 model = WhisperModel(model_size, device="cpu", compute_type="int8")
 
-segments, info = model.transcribe("data/audio/z9mwsrfSeuc.mp3", beam_size=5)
+segments, info = model.transcribe("data/audio/YzXEJSKbOtw.mp3", beam_size=5)
 
 print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
 

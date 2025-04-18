@@ -7,7 +7,7 @@ import logging
 
 formatter = TextFormatter()
 
-video_id = "z9mwsrfSeuc" # PbrrXXmPC1Y
+video_id = "Yt50HAjApu4" # PbrrXXmPC1Y
 output_dir = "/mnt/d/Personal/Programing/Work/crawl-data-from-social/data/audio"
 
 try:
@@ -22,6 +22,7 @@ if has_vi:
         vi_transcript = transcript_list.find_transcript(['vi'])
         transcript_data = vi_transcript.fetch()
         text_formatter = formatter.format_transcript(transcript_data)
+        print(text_formatter)
 
     except Exception as e:
         logging.error(f"Error processing Vietnamese transcript for {video_id}: {str(e)}")

@@ -22,6 +22,91 @@ services:
             interval: 2s
             timeout: 3s
             retries: 40
+    
+    redis:
+        image: redis:6-alpine
+        container_name: redis-crawler
+        ports:
+            - "6379:6379"
+        networks:
+            - network
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+    
+    worker:
+        build:
+            context: .
+            dockerfile: docker/WorkerDockerfile
+        container_name: celery-worker
+        command: celery -A worker.worker_process_video.celery_process_video worker --loglevel=info --queues=process_video
+        volumes:
+            - ./app:/app
+            - ./data:/app/data
+        depends_on:
+            - redis
+            - postgres
+        environment:
+            # Celery config
+            - CELERY_BROKER_URL=redis://localhost:6379/0
+            - CELERY_RESULT_BACKEND=redis://localhost:6379/0
+            # Redis config
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - REDIS_DB=0
+            # Postgres config
+            - POSTGRES_HOST=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=postgres
+            - POSTGRES_PORT=5432
+            # App config
+            - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+            - MAX_PARALLEL_DOWNLOADS=5
+        networks:
+            - network
+            
+    streamlit:
+        build:
+            context: .
+            dockerfile: docker/WebUIDockerfile
+        container_name: streamlit-app
+        command: streamlit run main.py --server.port=8501 --server.address=0.0.0.0
+        volumes:
+            - ./app:/app
+            - ./data:/app/data
+        ports:
+            - "8501:8501"
+        depends_on:
+            - postgres
+            - redis
+            - worker
+        environment:
+            # Celery config
+            - CELERY_BROKER_URL=redis://redis:6379/0
+            - CELERY_RESULT_BACKEND=redis://redis:6379/0
+            # Redis config
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - REDIS_DB=0
+            # Postgres config
+            - POSTGRES_HOST=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=postgres
+            - POSTGRES_PORT=5432
+            # App config
+            - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+            - MAX_PARALLEL_DOWNLOADS=5
+        networks:
+            - network
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8501"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
 networks:
     network:

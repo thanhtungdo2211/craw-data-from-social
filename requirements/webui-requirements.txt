@@ -1,0 +1,12 @@
+streamlit==1.22.0
+pandas==1.5.3
+python-dotenv==1.0.0
+celery==5.2.7
+redis==4.3.4
+sqlalchemy==1.4.46
+psycopg2-binary==2.9.5
+googletrans==4.0.0-rc1
+google-api-python-client==2.164.0
+faster_whisper==1.1.1
+youtube_transcript_api==1.0.3
+yt_dlp==2025.3.27
