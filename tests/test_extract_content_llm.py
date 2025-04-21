@@ -4,7 +4,7 @@ import json
 import logging
 from dotenv import load_dotenv
 
-load_dotenv("././.env")
+load_dotenv("./.env")
 
 logger = logging.getLogger(__name__)
 
@@ -97,3 +97,8 @@ def simple_extract_content(text):
     if len(text) > max_length:
         return text[:max_length] + "..."
     return text
+
+if __name__ == '__main__':
+    transcript = 'Bộ Công Thương phủy bỏ trách nhiệm vụ 600 loại sữa giả. Bộ Công Thương là một trong những đơn vị được giao quản lý liên quan đến sản phẩm sữa trong nước. Tuy nhiên, liên quan đến vụ việc 600 loại sữa giả vừa bị triệt phá gần đây, Úc trực của Quản lý và Phát triển Thị trường trong nước Bộ Công Thương đã khẳng định vì báo chí rằng luôn theo dõi, giám sát và phối hợp với các cơ quan bàn ngành liên quan trong công tác kiểm tra, kiểm soát thị trường hàng hòa nói chung, bao gồm cả mặt hàng sữa và thực phẩm chức năng nói riêng. Nhưng trường hợp này thì đây là các doanh nghiệp không thuộc thẩm quyền quản lý chuyên ngành của Bộ Công Thương. Một câu trả lời gom cả công tội vào hết, theo kiểu công việc quản lý thì làm rất tốt, nhưng cái này không thuộc quyền nên mới không làm. Bộ Công Thương của Quản lý Thị trường nói doanh nghiệp sản xuất và phân phối 600 loại sữa giả này không thuộc quyền quản lý, vậy thì ai mới có quyền quản lý doanh nghiệp này? Chẳng lẽ Bộ Giao thông Vân Tải, Bộ Lao động Xã hội hay Bộ Giáo dục Đào tạo mới có quyền quản lý? Bản chất làm việc không tới, chỉ ưa thói hoành hoẹ và nhật đút lót hối lộ cho các doanh nghiệp làm sai đã quen, lúc xảy ra chuyện lại đá quả bóng trách nhiệm cho nhau, đá đi đá lại cuối cùng bay đi luôn. Không một ngành nào liên quan hết. 4 năm trời với 600 loại sữa giả hoành hành, thu lợi 500 tỷ với nhiều băng khen được cấp, giờ mới được triệt phá mà vẫn khen thưởng công phá án của Bộ Công an, còn không thấy trách nhiệm thuộc bộ nào, là ai, ai đã đứng sau tất cả của 4 năm lừa lọc nhân dân đó?'
+    content = extract_content_from_transcript(transcript)
+    print(content)

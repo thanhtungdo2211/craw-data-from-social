@@ -41,7 +41,7 @@ services:
             context: .
             dockerfile: docker/WorkerDockerfile
         container_name: celery-worker
-        command: celery -A worker.worker_process_video.celery_process_video worker --loglevel=info --queues=process_video
+        command: celery -A worker.worker_process_video.celery_process_video worker --loglevel=info --queues=process_video --concurrency=2
         volumes:
             - ./app:/app
             - ./data:/app/data

@@ -6,6 +6,6 @@ yt_dlp==2025.3.27
 sqlalchemy==1.4.46
 psycopg2-binary==2.9.5
 python-dotenv==1.0.0
-streamlit==1.22.0
+streamlit==1.44.1
 pandas==1.5.3
 google-api-python-client==2.164.0

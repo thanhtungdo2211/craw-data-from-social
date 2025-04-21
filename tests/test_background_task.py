@@ -32,6 +32,7 @@ def monitor_task(video_id, timeout=1800, poll_interval=5):
     """
     video_url = f"https://www.youtube.com/watch?v={video_id}"
     logger.info(f"Started monitoring video processing: {video_url}")
+    
 
     # Check if the video already exists in the database
     db_video = get_video_from_db(video_id)

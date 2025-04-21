@@ -3,6 +3,7 @@ data/*
 # services/ai-service/*
 *.log
 .env
+logs/*
 
 # Byte-compiled / optimized files
 __pycache__/

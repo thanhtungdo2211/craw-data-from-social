@@ -33,7 +33,12 @@ def get_video_ids_by_query(query: str, max_results: int, api_key: str = None) ->
                     raise ValueError("API key required for channel search but not provided")
             
             # Get channel ID from username
-            youtube = googleapiclient.discovery.build('youtube', 'v3', developerKey=api_key)
+            # youtube = googleapiclient.discovery.build('youtube', 'v3', developerKey=api_key)
+            youtube = googleapiclient.discovery.build(
+                'youtube', 'v3', 
+                developerKey=api_key,
+                cache_discovery=True
+            )
             search_response = youtube.search().list(
                 part='id',
                 q=channel_username,

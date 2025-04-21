@@ -7,13 +7,16 @@ logger = logging.getLogger(__name__)
 def audio_to_transcript(audio_path):
     """Convert audio to transcript using Whisper model"""
     start_time = time.time()
-    
+
     # Log the start of the process
     logger.info(f"Starting Whisper model initialization for file {audio_path}")
     
+    ###
     # Initialize a lighter model
-    model_size = "medium"  # Changed from large-v3 to medium
-    
+    model_size = "small"  
+
+    start_time = time.time()
+
     # Initialize the model inside the function instead of globally
     model = WhisperModel(model_size, device="cpu", compute_type="int8")
     logger.info(f"Model initialized in {time.time() - start_time:.2f}s")
