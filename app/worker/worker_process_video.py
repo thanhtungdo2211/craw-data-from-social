@@ -9,6 +9,7 @@ sys.path.insert(1, ".")
 from celery import Celery
 from celery.utils.log import get_task_logger
 from dotenv import load_dotenv
+import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 from youtube_transcript_api.formatters import TextFormatter
 
@@ -16,9 +17,9 @@ from youtube_transcript_api.formatters import TextFormatter
 from config import CELERY_BROKER_URL, CELERY_RESULT_BACKEND
 from worker.worker_helper import is_backend_running, is_broker_running
 from worker.schema import TaskStatus
-from core.download_audio import download_single_audio
+from core.download_audio import download_single_audio, get_audio_duration
 from core.speech2text import audio_to_transcript
-from core.database_utils import update_video_status
+from core.database_utils import update_video_status, delete_video_record
 from core.extract_content import extract_content_from_transcript
 
 # Configure logging
@@ -33,6 +34,11 @@ DATA_DIR = BASE_DIR / "data"
 AUDIO_DIR = DATA_DIR / "audio"
 TRANSCRIPT_DIR = DATA_DIR / "transcripts"
 
+try:
+    MAX_DURATION = float(os.getenv("MAX_DURATION", 300))
+except ValueError:
+    MAX_DURATION = 300 
+    
 os.makedirs(AUDIO_DIR, exist_ok=True)
 os.makedirs(TRANSCRIPT_DIR, exist_ok=True)
 
@@ -57,7 +63,7 @@ def timeout_handler(signum, frame):
     name="process_video_task",
     acks_late=True, 
     max_retries=3, 
-    time_limit=3600)  # Limit 1 hour
+    time_limit=3600000)  # Limit 1 hour
 def process_video_task(self, video_id):
     """
     Background task to process YouTube video.
@@ -75,6 +81,24 @@ def process_video_task(self, video_id):
     
     # Update status to PROCESSING
     update_video_status(video_id, TaskStatus.PROCESSING.value)
+    
+    try:
+        duration = get_audio_duration(video_id)
+        logger.info(f"Video {video_id} duration: {duration} seconds")
+        
+        if duration and duration > MAX_DURATION:  
+            logger.info(f"Video {video_id} exceeds maximum duration ({duration}s > {MAX_DURATION}s). Skipping processing.")
+            
+            delete_video_record(video_id)
+            
+            return {
+                "status": "success",
+                "video_id": video_id,
+                "url": video_url,
+                "message": f"Skipped due to duration > {MAX_DURATION/60} minutes"
+            }
+    except Exception as e:
+        logger.warning(f"Failed to get duration for video {video_id}: {str(e)}. Will continue processing.")
     
     try:
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)

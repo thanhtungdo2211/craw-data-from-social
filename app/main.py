@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-load_dotenv("./.env")
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
@@ -32,22 +32,25 @@ os.makedirs(AUDIO_DIR, exist_ok=True)
 os.makedirs(TRANSCRIPT_DIR, exist_ok=True)
 
 def trigger_processing_for_videos(video_ids):
-    """Gửi video tới xử lý background nếu chưa được xử lý"""
+    """Send video to background processing if not processed yet"""
     processed_ids = []
     
     for video_id in video_ids:
         db_video = get_video_from_db(video_id)
         if not db_video or db_video.status not in [TaskStatus.SUCCESS.value, TaskStatus.PROCESSING.value]:
-            # Chỉ xử lý nếu không có trong DB hoặc trạng thái không phải SUCCESS/PROCESSING
+            # Only process if not in DB or status is not SUCCESS/PROCESSING
             process_video(video_id)
             processed_ids.append(video_id)
     
     return processed_ids
 
-def get_all_videos(limit=100):
+@st.cache_data(ttl=1, max_entries=1, show_spinner=False)
+def get_all_videos_cached(refresh_counter=0):
+    """Get all videos from database with cache busting"""
     db = get_db()
     try:
-        video_list = db.query(YouTubeVideo).order_by(YouTubeVideo.updated_at.desc()).limit(limit).all()
+        logger.info(f"Fetching fresh data from database, counter: {refresh_counter}")
+        video_list = db.query(YouTubeVideo).order_by(YouTubeVideo.updated_at.desc()).limit(100).all()
         return video_list
     except SQLAlchemyError as e:
         logger.error(f"Error when query database: {str(e)}")
@@ -55,18 +58,17 @@ def get_all_videos(limit=100):
     finally:
         db.close()
 
-def truncate_text(text, max_length=1000000):
-    """Cắt ngắn văn bản nếu quá dài"""
-    if not text:
-        return ""
+def truncate_text(text, max_length=100):
+    # if not text:
+    #     return ""
     if len(text) > max_length:
         return text[:max_length] + "..."
     return text
 
 if __name__ == "__main__":
     # Frontend Streamlit
-    st.title("Lấy nội dung YouTube bằng tiếng Việt")
-    
+    st.title("Phát hiện nội dung vi phạm luật an ninh mạng trên Mạng xã hội")
+
     # Create session state 
     if 'video_ids' not in st.session_state:
         st.session_state.video_ids = None
@@ -76,8 +78,12 @@ if __name__ == "__main__":
         st.session_state.submitted = False
     if 'processed_ids' not in st.session_state:
         st.session_state.processed_ids = set()
-    
-    # Form tìm kiếm
+    if 'refresh_counter' not in st.session_state:
+        st.session_state.refresh_counter = 0
+    if 'auto_refresh' not in st.session_state:
+        st.session_state.auto_refresh = False  # Add state to control auto refresh
+
+    # Form searching
     with st.form("search_form"):
         query = st.text_input("Nhập từ khóa tìm kiếm hoặc tên kênh YouTube (bắt đầu bằng @):", 
                             placeholder="Ví dụ: 'việt tân' hoặc '@VietTan'",
@@ -90,7 +96,7 @@ if __name__ == "__main__":
             st.session_state.submitted = True
             st.session_state.video_ids = None
             st.session_state.processed_ids = set()
-    
+
     if submit_button or (st.session_state.submitted and st.session_state.video_ids is None):
         with st.spinner(f"Đang tìm kiếm video cho '{st.session_state.query}'..."):
             video_ids = get_video_ids_by_query(st.session_state.query, max_results, api_key=YOUTUBE_API_KEY)
@@ -102,41 +108,62 @@ if __name__ == "__main__":
             st.success(f"Đã tìm thấy {len(st.session_state.video_ids)} video cho '{st.session_state.query}'.")
             
             to_process = [v_id for v_id in st.session_state.video_ids 
-                          if v_id not in st.session_state.processed_ids]
+                        if v_id not in st.session_state.processed_ids]
             
             if to_process:
                 processed = trigger_processing_for_videos(to_process)
                 st.session_state.processed_ids.update(processed)
                 if processed:
                     st.info(f"Đã gửi {len(processed)} video để xử lý.")
-    
+                    st.session_state.refresh_counter += 1
+
     st.subheader("Danh sách tất cả video")
-    
-    all_videos = get_all_videos(limit=100)
-    
+
+    # Get the latest video data from the database
+    all_videos = get_all_videos_cached(refresh_counter=st.session_state.refresh_counter)
+
     if not all_videos:
         st.info("Chưa có video nào được xử lý trong hệ thống.")
+        # Stop auto refresh if there are no videos
+        st.session_state.auto_refresh = False
     else:
-        # Hiển thị số lượng theo trạng thái
+        # Count number by status
         success_count = len([v for v in all_videos if v.status == TaskStatus.SUCCESS.value])
         failed_count = len([v for v in all_videos if v.status == TaskStatus.FAILURE.value])
         pending_count = len([v for v in all_videos if v.status in [TaskStatus.PENDING.value, TaskStatus.PROCESSING.value]])
         
         st.write(f"Tổng cộng: {len(all_videos)} video | "
-                 f"Thành công: {success_count} | "
-                 f"Thất bại: {failed_count} | "
-                 f"Đang xử lý: {pending_count}")
+                f"Thành công: {success_count} | "
+                f"Thất bại: {failed_count} | "
+                f"Đang xử lý: {pending_count}")
         
-        # Tạo DataFrame hợp nhất từ tất cả các video
+        # Check for videos that are processing
+        pending_videos = [v for v in all_videos if v.status in [TaskStatus.PENDING.value, TaskStatus.PROCESSING.value]]
+        
+        # Manual refresh button before the table
+        refresh_cols = st.columns([1, 3])
+        with refresh_cols[0]:
+            if pending_videos and st.button("Tải lại ngay", key="manual_refresh"):
+                st.session_state.refresh_counter += 1
+                # Turn off auto refresh before rerun to avoid ghost elements
+                st.session_state.auto_refresh = False
+                st.rerun()
+        
+        with refresh_cols[1]:
+            if pending_videos:
+                st.info(f"Đang xử lý {len(pending_videos)} video. Trang sẽ tự động cập nhật sau...")
+                # Enable auto refresh if there are pending videos
+                st.session_state.auto_refresh = True
+        
+        # Display data table
         all_data = []
         for video in all_videos:
-            # Xác định nội dung hiển thị dựa trên trạng thái
             if video.status == TaskStatus.SUCCESS.value:
-                transcript = truncate_text(video.transcript, 100)
-                content = truncate_text(video.content, 100)
+                transcript = truncate_text(video.transcript)
+                content = truncate_text(video.content)
             elif video.status == TaskStatus.FAILURE.value:
                 error_msg = video.transcript or video.content or "Không có thông tin lỗi"
-                transcript = f"LỖI: {truncate_text(error_msg, 100)}"
+                transcript = f"LỖI: {truncate_text(error_msg)}"
                 content = ""
             else:
                 transcript = f"Đang xử lý... ({video.status})"
@@ -151,16 +178,14 @@ if __name__ == "__main__":
                 "Content": content
             })
         
-        # Hiển thị bảng hợp nhất
-        unified_df = pd.DataFrame(all_data)
-        st.dataframe(unified_df, use_container_width=True)
+        # Display table with unique key
+        st.dataframe(pd.DataFrame(all_data), use_container_width=True)
         
-        # Button để tải xuống dữ liệu thành công
-        success_videos = [v for v in all_videos if v.status == TaskStatus.SUCCESS.value]
-        if success_videos:
+        # Export and retry failed videos
+        if success_videos := [v for v in all_videos if v.status == TaskStatus.SUCCESS.value]:
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("Tải xuống dữ liệu thành công (CSV)"):
+                if st.button("Tải xuống dữ liệu thành công (CSV)", key="download_button"):
                     export_df = pd.DataFrame([{
                         "ID": v.video_id,
                         "URL": v.url,
@@ -175,31 +200,34 @@ if __name__ == "__main__":
                         data=csv,
                         file_name=f"youtube_results_{time.strftime('%Y%m%d_%H%M')}.csv",
                         mime="text/csv",
+                        key="download_csv"
                     )
             
-            # Button để thử lại xử lý video lỗi
-            failed_videos = [v for v in all_videos if v.status == TaskStatus.FAILURE.value]
-            if failed_videos:
+            # Retry failed videos
+            if failed_videos := [v for v in all_videos if v.status == TaskStatus.FAILURE.value]:
                 with col2:
-                    if st.button("Thử lại xử lý các video lỗi"):
+                    if st.button("Thử lại xử lý các video lỗi", key="retry_button"):
                         retry_ids = [v.video_id for v in failed_videos]
                         processed = trigger_processing_for_videos(retry_ids)
                         st.session_state.processed_ids.update(processed)
                         if processed:
                             st.info(f"Đã gửi lại {len(processed)} video để xử lý.")
+                            st.session_state.refresh_counter += 1
+                            st.session_state.auto_refresh = True
                             st.rerun()
-        
-        # Tự động làm mới nếu còn video đang xử lý
-        pending_videos = [v for v in all_videos if v.status in [TaskStatus.PENDING.value, TaskStatus.PROCESSING.value]]
-        if pending_videos:
-            st.info(f"Đang xử lý {len(pending_videos)} video. Trang sẽ tự động cập nhật.")
-            if st.button("Tải lại ngay"):
-                st.rerun()
-            
-            # Auto refresh every 10 seconds
-            st.write("Chờ tự động tải lại...")
-            refresh_placeholder = st.empty()
+
+    # Countdown placed at the end, after everything is displayed
+    # Ensure auto refresh only happens when pending_videos exists and auto_refresh=True
+    if st.session_state.auto_refresh and 'pending_videos' in locals() and pending_videos:
+        with st.empty():
             for i in range(10, 0, -1):
-                refresh_placeholder.write(f"Tự động tải lại sau {i} giây...")
+                st.write(f"Tự động tải lại sau {i} giây...")
                 time.sleep(1)
-            st.rerun()
+                # Exit the loop if auto_refresh is turned off while counting
+                if not st.session_state.auto_refresh:
+                    break
+            
+            # Only rerun if auto_refresh is still on
+            if st.session_state.auto_refresh:
+                st.session_state.refresh_counter += 1
+                st.rerun()

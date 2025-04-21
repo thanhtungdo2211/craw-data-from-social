@@ -152,3 +152,20 @@ def save_video_to_db(video_id, url, transcript, content=None, status=TaskStatus.
         return False
     finally:
         db.close()
+
+def delete_video_record(video_id):
+    db = get_db()
+    try:
+        video = db.query(YouTubeVideo).filter(YouTubeVideo.video_id == video_id).first()
+        if video:
+            db.delete(video)
+            db.commit()
+            logger.info(f"Deleted video record for {video_id}")
+            return True
+        return False
+    except Exception as e:
+        logger.error(f"Error deleting video record for {video_id}: {str(e)}")
+        db.rollback()
+        return False
+    finally:
+        db.close()
