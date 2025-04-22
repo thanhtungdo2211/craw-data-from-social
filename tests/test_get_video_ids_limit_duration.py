@@ -3,8 +3,12 @@ import yt_dlp as youtube_dlp #type: ignore
 import os
 from typing import List
 import googleapiclient.discovery
+from dotenv import load_dotenv
 
-from core.download_audio import get_audio_duration
+import sys
+sys.path.insert(1, '.')
+sys.path.insert(1, 'app/')
+from core.download_audio import get_audio_duration  # Thêm import này
 
 def get_video_ids_by_query(query: str, max_results: int, api_key: str = None, max_duration: float = None) -> list:
     """
@@ -22,7 +26,7 @@ def get_video_ids_by_query(query: str, max_results: int, api_key: str = None, ma
     logging.info(f"Starting search with query: {query}, max_results: {max_results}, max_duration: {max_duration}")
     
     all_video_ids = []
-    processed_count = 0  
+    processed_count = 0  # Số video đã xử lý (kể cả bị loại)
     
     try:
         if query.startswith('@'):
@@ -66,7 +70,7 @@ def get_video_ids_by_query(query: str, max_results: int, api_key: str = None, ma
                     
                 processed_count += 1
                 
-                # Check duration
+                # Kiểm tra độ dài nếu max_duration được chỉ định
                 if max_duration is not None:
                     try:
                         duration = get_audio_duration(video_id)
@@ -84,6 +88,7 @@ def get_video_ids_by_query(query: str, max_results: int, api_key: str = None, ma
             
         else:
             # Regular keyword search using yt-dlp
+            # Tăng số lượng kết quả tìm kiếm để có đủ video sau khi lọc
             search_multiplier = 3 if max_duration else 1
             search_query = f"ytsearch{max_results * search_multiplier}:{query}"
             ydl_opts = {
@@ -101,6 +106,7 @@ def get_video_ids_by_query(query: str, max_results: int, api_key: str = None, ma
                             video_id = entry['id']
                             processed_count += 1
                             
+                            # Kiểm tra độ dài nếu max_duration được chỉ định
                             if max_duration is not None:
                                 try:
                                     duration = get_audio_duration(video_id)
@@ -178,3 +184,35 @@ def get_video_ids_by_channel(channel_id: str, api_key: str = None) -> List[str]:
             break
     
     return video_ids
+
+if __name__ == "__main__":
+
+    load_dotenv('./.env')
+    api_key = os.getenv('YOUTUBE_API_KEY')
+
+
+    # Thông số tìm kiếm
+    channel_query = "vạn thịnh phát"
+    max_results = 10
+    max_duration = 600  # Giới hạn video 10 phút (600 giây)
+    
+    # Tìm kiếm video từ channel
+    print(f"Đang tìm kiếm video từ channel {channel_query}...")
+    video_ids = get_video_ids_by_query(
+        query=channel_query, 
+        max_results=max_results,
+        api_key=api_key,
+        max_duration=max_duration
+    )
+    
+    # In kết quả
+    print(f"\nĐã tìm thấy {len(video_ids)} video từ {channel_query}:")
+    for i, video_id in enumerate(video_ids, 1):
+        try:
+            duration = get_audio_duration(video_id)
+            print(f"{i}. Video ID: {video_id} - Duration: {duration:.2f} seconds")
+            print(f"   URL: https://www.youtube.com/watch?v={video_id}")
+        except Exception as e:
+            print(f"{i}. Video ID: {video_id} - Không thể lấy được thông tin duration: {str(e)}")
+    
+    print(f"\nQuá trình tìm kiếm hoàn tất.")

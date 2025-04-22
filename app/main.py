@@ -81,25 +81,37 @@ if __name__ == "__main__":
     if 'refresh_counter' not in st.session_state:
         st.session_state.refresh_counter = 0
     if 'auto_refresh' not in st.session_state:
-        st.session_state.auto_refresh = False  # Add state to control auto refresh
+        st.session_state.auto_refresh = False
+    if 'max_duration' not in st.session_state:
+        st.session_state.max_duration = 600  
 
     # Form searching
     with st.form("search_form"):
         query = st.text_input("Nhập từ khóa tìm kiếm hoặc tên kênh YouTube (bắt đầu bằng @):", 
                             placeholder="Ví dụ: 'việt tân' hoặc '@VietTan'",
                             value=st.session_state.query)
-        max_results = st.slider("Số lượng video tối đa:", min_value=1, max_value=50, value=5)
+        col1, col2 = st.columns(2)
+        with col1:
+            max_results = st.slider("Số lượng video tối đa:", min_value=1, max_value=50, value=5)
+        with col2:
+            max_duration = st.slider("Giới hạn độ dài video (giây):", 
+                                min_value=30, max_value=600, value=st.session_state.max_duration,
+                                help="Chỉ tìm những video có độ dài nhỏ hơn hoặc bằng giá trị này")
+        
         submit_button = st.form_submit_button("Tìm kiếm")
         
         if submit_button:
             st.session_state.query = query
+            st.session_state.max_duration = max_duration
             st.session_state.submitted = True
             st.session_state.video_ids = None
             st.session_state.processed_ids = set()
 
     if submit_button or (st.session_state.submitted and st.session_state.video_ids is None):
         with st.spinner(f"Đang tìm kiếm video cho '{st.session_state.query}'..."):
-            video_ids = get_video_ids_by_query(st.session_state.query, max_results, api_key=YOUTUBE_API_KEY)
+            video_ids = get_video_ids_by_query(st.session_state.query, max_results, 
+                                            api_key=YOUTUBE_API_KEY, 
+                                            max_duration=st.session_state.max_duration)
             st.session_state.video_ids = video_ids
         
         if not st.session_state.video_ids:
